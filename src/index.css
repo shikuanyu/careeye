@@ -15,6 +15,18 @@ code {
 }
 
 img {
-  height: 100%;
-  width: 100%;
+  height: 90%;
+  width: 90%;
+}
+
+.spaceUp{
+  margin-top: 1vh;
+}
+.spaceDown{
+  margin-bottom: 3vh;
+}
+
+.taller{
+  padding-top:1vh;
+  padding-bottom:1vh;
 }

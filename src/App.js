@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{Component} from 'react';
 import logo from './logo.svg';
 import { Layout, Row, Col, Divider } from 'antd';
 import CameraInfo from './CameraInfo';
@@ -9,63 +9,145 @@ import IndexBox from './IndexBox.js';
 
 const { Header, Footer, Content } = Layout;
 
-function App() {
-  const tsIcon = "https://images.unsplash.com/photo-1436473849883-bb3464c23e93?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80";
-  const mock ={
-    logoURL:'http://utdimensions.com/LOGO256-1.d88fd1a0.png',
+class App extends Component {
+  constructor(props){
+    super(props)
+    this.state={
+      data:{
+        "people": [
+            {
+                "breathWarningLevel": "GREEN",
+                "pose": "stand",
+                "poseWarningLevel": "GREEN",
+                "ROI": "default0",
+                "heartRate": 63,
+                "breathRate": 12,
+                "info": "",
+                "heartWarningLevel": "GREEN"
+            }
+        ],
+        "deviceId": "TEST06",
+        "goneWarningLevel": 0,
+        "deviceLocalIp": "192.168.7.16",
+        "totalPeopleNumber": 1,
+        "isGettingSignal": 200,
+        "peopleGone": [
+            {
+                "ROI2_ID": "blindSpot0",
+                "goneTime": 1204.707
+            }
+        ],
+        "_t": 1575260796.561986,
+        "rotateAngle": 0,
+        "_strTime": "2019-12-02 12:26:36",
+        "movementLevel": 5
+    },
+      lan:'en',
   }
-  return (
-    // <div className="App">
-      // <header className="App-header">
-      //   <img src={logo} className="App-logo" alt="logo" />
-      //   <p>
-      //     Edit <code>src/App.js</code> and save to reload.
-      //   </p>
-      //   <a
-      //     className="App-link"
-      //     href="https://reactjs.org"
-      //     target="_blank"
-      //     rel="noopener noreferrer"
-      //   >
-      //     Learn React
-      //   </a>
-      // </header
-    // </div>
-    <div style={{background: `url(${tsIcon}) no-repeat center center fixed`, backgroundSize:"cover",  height:"100vh", width:"100vw"}}>
+    this.changeLanguage = this.changeLanguage.bind(this);
+
+  }
+
+  changeLanguage(){
+    if(this.state.lan=='en'){
+      this.setState({lan:'zh'});
+    }else{
+      this.setState({lan:'en'});
+    }
+  }
+
+  componentDidMount()
+  {
+    // this.infiniteFetch();
+  }
+
+  componentWillUnmount(){
+    // clearInterval(this.ticker);
+  }
+
+  infiniteFetch= ()=>{
+    this.ticker = setInterval(()=>{
+      let initHeaders = new Headers();
+      initHeaders.append('Accept', 'application/json, text/html, */*')
+      initHeaders.append('Content-Type', 'text/plain;charset=UTF-8');
+      const init = {
+        // method:'GET',
+        headers:initHeaders,
+        // cache:'default',
+      };
+      console.log("start fetching");
+      fetch('http://www.utdimensions.com:5005/check_newest_jsonstr?deviceId=TEST10',init)
+      .then(res=>{
+        console.log(res);
+        return res.json();})
+      .then(data=>{
+
+        this.setState({data:data});
+      })
+      .catch(e=>console.log('error:',e));
+    },3000);
+  }
+
+
+  render(){
+    const tsIcon = "https://images.unsplash.com/photo-1436473849883-bb3464c23e93?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80";
+    const mock ={
+      logoURL:'http://utdimensions.com/LOGO256-1.d88fd1a0.png',
+    }
+    let {deviceId
+    } = this.state.data;
+    let movement= this.state.data.movementLevel<5?'static':(this.state.data.movementLevel<5?'fretting':'moving');
+    let progress = this.state.data.isGettingSignal/4;
+    let people_count = this.state.data.people.length;
+    let cameraInfo = {
+      movement,
+      device_name:deviceId,
+      people_count
+    }
+    let {pose,heartRate,breathRate} = this.state.data.people[0];
+    return (
+    <div>
       <Layout>
-        <Header>
+        <Header className="taller spaceDown">
           <Row type="flex" align="middle">
             <Col span={1} offset={1}>
               <img src={mock.logoURL} alt="logo"/>
             </Col>
             <Col span={2} offset={20}>
-              <Button type="primary">English</Button>
+              <Button type="primary" onClick={this.changeLanguage}>{this.state.lan=='en'?'中文':'English'}</Button>
             </Col>
           </Row>
         </Header>
         <Content>
           <Row>
             <Col span={20} offset={2}>
-              <CameraInfo />
+              <CameraInfo lan={this.state.lan} info={cameraInfo}/>
               <Divider/>
-              <SubjectInfo/>
-              <Divider>Real Time Monitoring</Divider>
-              <Row>
-              <Col span={20} offset={0}>
-              <IndexBox/>
+              <SubjectInfo lan={this.state.lan} pose={pose} progress={progress}/>
+              <Divider>{this.state.lan=='en'?'Real Time Monitoring':'实时监测'}</Divider>
+              <Row >
+              <Col span={22}>
+              <IndexBox lan={this.state.lan} heart={heartRate} breath={breathRate}/>
               </Col>
               </Row>
             </Col>
           </Row>
         </Content>
-
-        <Footer></Footer>
+        <Divider />
+        <Footer>
+        <Row type="flex" justify="center" style={{marginTop: '2vh'}}>
+        <Col style={{textAlign: 'center'}} span={22}>
+        <h3>{this.state.lan=='en'?'United Dimensions Technologies Co., Ltd.':'联合维度（广州）科技有限公司'}</h3>
+        </Col>
+        </Row>
+        </Footer>
       </Layout>
 
 
     </div>
 
   );
+}
 }
 
 export default App;

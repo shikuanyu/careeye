@@ -25,26 +25,33 @@ class CameraInfo extends Component {
   }
 
   render(){
-    const mock = {
-      tester:'Paul',
-      movement:'passive',
-      people_count:1,
-      device_name:'UTDMachine-001'
-    };
+    // const mock = {
+    //   tester:'Paul',
+    //   movement:'passive',
+    //   people_count:1,
+    //   device_name:'UTDMachine-001'
+    // };
+    const {movement,people_count,device_name} = this.props.info
+    const lan = this.props.lan
     return(
       <div>
         <Row type="flex" justify="center" align="middle">
           <Col span={10} >
             <Descriptions size={"small"} column={1}>
-              <Descriptions.Items label="Current Tester" >{mock.tester}</Descriptions.Items>
-              <Descriptions.Items label="Movement Detection">{mock.movement}</Descriptions.Items>
-              <Descriptions.Items label="Number of People">{mock.people_count}</Descriptions.Items>
+              <Descriptions.Items label={lan=='en'?"Movement Detection":'运动检测'}>
+              {movement=='static'?
+              (lan=='en'?"static":'静止'):
+              (movement=='fretting'?
+              (lan=='en'?"fretting":'微动'):
+              (lan=='en'?"moving":'移动'))}
+              </Descriptions.Items>
+              <Descriptions.Items label={lan=='en'?"Number of People":'人数'}>{people_count}</Descriptions.Items>
             </Descriptions>
           </Col>
           <Col span={5} offset={9} >
             <Descriptions style={{textAlign:'right'}} column={1}>
-            <Descriptions.Items label="Device Name">{mock.device_name}</Descriptions.Items>
-            <Descriptions.Items label="Time">{this.state.time.toLocaleTimeString()}</Descriptions.Items>
+            <Descriptions.Items label={lan=='en'?"Device Name":'设备名'}>{device_name}</Descriptions.Items>
+            <Descriptions.Items label={lan=='en'?"Time":'时间'}>{this.state.time.toLocaleString(lan=='en'?'en-US':'zh-CN')}</Descriptions.Items>
             </Descriptions>
           </Col>
         </Row>
