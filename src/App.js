@@ -227,7 +227,7 @@ class App extends Component {
 					</Content>
 					<Divider />
 					<Footer>
-						<Row type="flex" justify="center" style={{ marginTop: "2vh" }}>
+						<Row type="flex" justify="center" style={{ marginTop: "-2vh" }}>
 							<Col style={{ textAlign: "center" }} span={22}>
 								<h3>
 									{this.state.lan == "en"
