@@ -187,7 +187,7 @@ class App extends Component {
 		return (
 			<div>
 				<Layout>
-					<Header className="taller spaceDown">
+					<Header className="spaceDown">
 						<Row type="flex" align="middle">
 							<Col span={1} offset={1}>
 								<img src={mock.logoURL} alt="logo" />
