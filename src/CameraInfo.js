@@ -1,5 +1,7 @@
-import { Row, Col, Descriptions } from "antd";
+import { Row, Col, Descriptions, Select } from "antd";
 import React, { Component } from "react";
+
+const {Option} = Select;
 
 class CameraInfo extends Component {
 	constructor(props) {
@@ -23,15 +25,17 @@ class CameraInfo extends Component {
 		});
 	}
 
+
 	render() {
-		// const mock = {
-		//   tester:'Paul',
-		//   movement:'passive',
-		//   people_count:1,
-		//   device_name:'UTDMachine-001'
-		// };
-		const { movement, people_count, device_name } = this.props.info;
+		const { movement, people_count, activeDevice, deviceNames, connection } = this.props.info;
 		const lan = this.props.lan;
+		const options = [];
+		if(Array.isArray(deviceNames)){
+			for(let name of deviceNames){
+				options.push(<Option value={name}>{name}</Option>);
+			}
+		}
+
 		return (
 			<div>
 				<Row type="flex" justify="center" align="middle">
@@ -62,11 +66,13 @@ class CameraInfo extends Component {
 						</Descriptions>
 					</Col>
 					<Col span={5} offset={9}>
-						<Descriptions style={{ textAlign: "right" }} column={1}>
+						<Descriptions size={'small'} style={{ textAlign: "right" }} column={1}>
 							<Descriptions.Items
 								label={lan == "en" ? "Device Name" : "设备名"}
 							>
-								{device_name}
+							<Select defaultValue={'--'} size = {'small'} onChange={this.props.handleDeviceChange} loading={!connection}>
+							  {options}
+							</Select>
 							</Descriptions.Items>
 							<Descriptions.Items label={lan == "en" ? "Time" : "时间"}>
 								{this.state.time.toLocaleString(
@@ -74,8 +80,10 @@ class CameraInfo extends Component {
 								)}
 							</Descriptions.Items>
 						</Descriptions>
+
 					</Col>
 				</Row>
+
 			</div>
 		);
 	}

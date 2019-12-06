@@ -41,7 +41,10 @@ class App extends Component {
 				_strTime: "2019-12-02 12:26:36",
 				movementLevel: null
 			},
-			lan: "en"
+			lan: "en",
+			activeDevice:null,
+			deviceNames:[],
+			connection:false,
 		};
 		this.changeLanguage = this.changeLanguage.bind(this);
 	}
@@ -53,62 +56,67 @@ class App extends Component {
 			this.setState({ lan: "en" });
 		}
 	}
-
-	sendMockData1= ()=>{
-		this.setState({
-			data: {
-				people: [
-					{
-						breathWarningLevel: "GREEN",
-						pose: 'stand',
-						poseWarningLevel: "GREEN",
-						ROI: "default0",
-						heartRate: -1,
-						breathRate: -1,
-						info: "",
-						heartWarningLevel: "GREEN"
-					}
-				],
-				deviceId: "mock",
-				goneWarningLevel: 0,
-				deviceLocalIp: "192.168.7.16",
-				totalPeopleNumber: 1,
-				isGettingSignal: 120,
-				peopleGone: [
-					{
-						ROI2_ID: "blindSpot0",
-						goneTime: 1204.707
-					}
-				],
-				_t: 1575260796.561986,
-				rotateAngle: 0,
-				_strTime: "2019-12-02 12:26:36",
-				movementLevel: 5
-			}
-		})
-	}
-
-	sendMockData2= ()=>{
-		this.setState({
-			data:{
-	        "_t": 1575427374.026184,
-	        "deviceId": "mock",
-	        "people": [],
-	        "goneWarningLevel": 0,
-	        "_strTime": "2019-12-04 10:42:54",
-	        "totalPeopleNumber": 0,
-	        "peopleGone": [
-	            {
-	                "ROI2_ID": "blindSpot0",
-	                "goneTime": 1.563
-	            }
-	        ],
-	        "rotateAngle": 0,
-	        "deviceLocalIp": "192.168.7.16",
-	        "isGettingSignal": 0
-	    }
-		})
-	}
+	//
+	// sendMockData1= ()=>{
+	// 	this.setState({
+	// 		data: {
+	// 			people: [
+	// 				{
+	// 					breathWarningLevel: "GREEN",
+	// 					pose: 'stand',
+	// 					poseWarningLevel: "GREEN",
+	// 					ROI: "default0",
+	// 					heartRate: -1,
+	// 					breathRate: -1,
+	// 					info: "",
+	// 					heartWarningLevel: "GREEN"
+	// 				}
+	// 			],
+	// 			deviceId: "mock01",
+	// 			goneWarningLevel: 0,
+	// 			deviceLocalIp: "192.168.7.16",
+	// 			totalPeopleNumber: 1,
+	// 			isGettingSignal: 120,
+	// 			peopleGone: [
+	// 				{
+	// 					ROI2_ID: "blindSpot0",
+	// 					goneTime: 1204.707
+	// 				}
+	// 			],
+	// 			_t: 1575260796.561986,
+	// 			rotateAngle: 0,
+	// 			_strTime: "2019-12-02 12:26:36",
+	// 			movementLevel: 5
+	// 		},
+	// 		deviceNames:['mock01','mock02'],
+	// 		connection:true,
+	// 	})
+	// }
+	//
+	// sendMockData2= ()=>{
+	// 	this.setState({
+	// 		data:{
+	//         "_t": 1575427374.026184,
+	//         "deviceId": "mock02",
+	//         "people": [],
+	//         "goneWarningLevel": 0,
+	//         "_strTime": "2019-12-04 10:42:54",
+	//         "totalPeopleNumber": 0,
+	//         "peopleGone": [
+	//             {
+	//                 "ROI2_ID": "blindSpot0",
+	//                 "goneTime": 1.563
+	//             }
+	//         ],
+	//         "rotateAngle": 0,
+	//         "deviceLocalIp": "192.168.7.16",
+	//         "isGettingSignal": 0
+	//     },
+	// 		deviceNames:[],
+	// 		connection:false,
+	//
+	// 	})
+	// }
 
 	componentDidMount() {
 		this.infiniteFetch();
@@ -116,6 +124,16 @@ class App extends Component {
 
 	componentWillUnmount() {
 		clearInterval(this.ticker);
+	}
+
+	checkDataValidity = (data)=>{
+		if(data.length==0){
+			return false;
+		}else return true;
+	}
+
+	handleDeviceChange = (activeDevice)=>{
+		this.setState({activeDevice});
 	}
 
 	infiniteFetch = () => {
@@ -128,18 +146,37 @@ class App extends Component {
 				headers: initHeaders
 				// cache:'default',
 			};
-			// console.log("start fetching");
+			console.log("start fetching");
 			fetch(
-				"http://www.utdimensions.com:5005/check_newest_jsonstr?deviceId=TEST6",
+				"http://www.utdimensions.com:5005/check_newest_jsonstr?deviceId=all",
 				init
 			)
 				.then(res => {
 					return res.json();
 				})
 				.then(data => {
-					this.setState({ data: data[0] });
+					if(!this.checkDataValidity(data))return;
+					let activeDevice = this.state.activeDevice;
+						//pick the first device if not specifically named
+					let deviceNames = [];
+					let index = 0;
+					let connection =false;
+					for(let i=0;i<data.length;i++){
+						let deviceName=data[i].deviceId;
+						deviceNames.push(deviceName);
+						if(deviceName==activeDevice){
+							index=i;
+							connection=true;
+						}
+					}
+					// auto select active device
+					// this.setState({data:data[index],deviceNames,activeDevice:deviceNames[index]});
+					if(connection){
+						this.setState({data:data[index],deviceNames,connection});
+					}
+					else {this.setState({deviceNames});}
 				})
-				.catch(e => console.log("error:", e));
+				.catch(e => console.log(e));
 		}, 3000);
 	};
 
@@ -149,8 +186,6 @@ class App extends Component {
 		const mock = {
 			logoURL: "http://utdimensions.com/LOGO256-1.d88fd1a0.png"
 		};
-		// console.log(this.state.data);
-		let { deviceId } = this.state.data;
 		let movement =
 				this.state.data.movementLevel==null
 				?"--"
@@ -161,14 +196,14 @@ class App extends Component {
 				: "moving";
 		let progress = this.state.data.isGettingSignal / 4;
 		let people_count = this.state.data.totalPeopleNumber;
+		let { activeDevice,deviceNames,connection } = this.state;
 		let cameraInfo = {
 			movement,
-			device_name: deviceId,
-			people_count
+			activeDevice,
+			deviceNames,
+			people_count,
+			connection
 		};
-		// let pose = 'none';
-		// let heartRate = -1;
-		// let breathRate = -1;
 		if(people_count>0){
 			var { pose, heartRate, breathRate } = this.state.data.people[0];
 		}else {
@@ -180,10 +215,7 @@ class App extends Component {
 			(
 				breathRate!=-1?100:progress
 			));
-		// console.log(`heart:${heartRate}, breath:${breathRate}, progress:${progress}`);
-		console.log(this.state.data);
 		let lan = this.state.lan;
-
 		return (
 			<div>
 				<Layout>
@@ -203,7 +235,7 @@ class App extends Component {
 					<Content>
 						<Row>
 							<Col span={20} offset={2}>
-								<CameraInfo lan={this.state.lan} info={cameraInfo} />
+								<CameraInfo lan={this.state.lan} info={cameraInfo} handleDeviceChange={this.handleDeviceChange}  />
 								<Divider />
 								<SubjectInfo
 									lan={this.state.lan}
