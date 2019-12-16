@@ -195,7 +195,7 @@ class App extends Component {
 				? "fretting"
 				: "moving";
 		let progress = this.state.data.isGettingSignal / 4;
-		let people_count = this.state.data.totalPeopleNumber;
+		let people_count = this.state.data.people.length;
 		let { activeDevice,deviceNames,connection } = this.state;
 		let cameraInfo = {
 			movement,
@@ -204,7 +204,7 @@ class App extends Component {
 			people_count,
 			connection
 		};
-		if(this.state.data.people.length>0){
+		if(people_count>0){
 			var { pose, heartRate, breathRate } = this.state.data.people[0];
 		}else {
 			var pose = null;
