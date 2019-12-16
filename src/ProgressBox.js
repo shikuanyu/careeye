@@ -7,7 +7,7 @@ class ProgressBox extends Component {
 		return (
 			<div>
 				<Row type="flex" justify="center">
-					<Col span={8}>
+					<Col className='text-center'>
 						{progress == 100 ? (
 							<h2>{lan == "en" ? "Detection complete!" : "采集完成！"}</h2>
 						) : progress == 0 ? (
@@ -20,7 +20,7 @@ class ProgressBox extends Component {
 					</Col>
 				</Row>
 				<Row type="flex" justify="center">
-					<Col span={18}>
+					<Col span={20}>
 						<Progress
 							percent={progress == 0 ? 100 : progress}
 							status={
@@ -37,7 +37,7 @@ class ProgressBox extends Component {
 					</Col>
 				</Row>
 				<Row type="flex" justify="center">
-					<Col span={8}>
+					<Col className='text-center'>
 						{progress == 100 ? (
 							<h3>{lan == "en" ? "See result below" : "以下为检测结果"}</h3>
 						) : progress == 0 ? (

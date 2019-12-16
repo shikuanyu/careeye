@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Row, Col, Descriptions, Slider } from "antd";
+import { Row, Col, Descriptions, Slider,Divider } from "antd";
 import ProgressBox from "./ProgressBox.js";
 import Timer from "./Timer.js";
 
@@ -60,7 +60,7 @@ class SubjectInfo extends Component {
 		return (
 			<div>
 				<Row type="flex" align="middle" gutter={0}>
-					<Col span={3}>
+					<Col xs={10} sm={7} md={3}>
 						<img
 							src={
 								pose === "stand"
@@ -74,7 +74,7 @@ class SubjectInfo extends Component {
 							alt="posture-img"
 						/>
 					</Col>
-					<Col span={5}>
+					<Col xs={14} sm={17} md={5}>
 						<Descriptions
 							title={lan == "en" ? "Subject Info" : "被测人信息"}
 							column={1}
@@ -92,7 +92,7 @@ class SubjectInfo extends Component {
 							</Descriptions.Items>
 						</Descriptions>
 						<Row>
-						  <Col span={13}>
+						  <Col xs={15} sm={10} md={22} lg={20} xl={18}>
 								<Slider
 								step={null}
 								marks={marks}
@@ -103,7 +103,7 @@ class SubjectInfo extends Component {
 							</Col>
 						</Row>
 					</Col>
-					<Col style={{ textAlign: "center" }} span={15}>
+					<Col xs={24} md={15} lg={16}>
 						<ProgressBox lan={lan} progress={progress} />
 					</Col>
 				</Row>

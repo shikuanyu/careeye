@@ -38,8 +38,8 @@ class CameraInfo extends Component {
 
 		return (
 			<div>
-				<Row type="flex" justify="center" align="middle">
-					<Col span={10}>
+				<Row type="flex" justify="space-between" align="middle">
+					<Col xs={24} sm={10} md={10} lg={8} xl={7}>
 						<Descriptions size={"small"} column={1}>
 							<Descriptions.Items
 								label={lan == "en" ? "Movement Detection" : "运动检测"}
@@ -65,12 +65,13 @@ class CameraInfo extends Component {
 							</Descriptions.Items>
 						</Descriptions>
 					</Col>
-					<Col span={5} offset={9}>
-						<Descriptions size={'small'} style={{ textAlign: "right" }} column={1}>
+					<Col md={4} lg={10} xl={12}/>
+					<Col xs={24} sm={12} md={10} lg={6} xl={5}>
+						<Descriptions size={'small'} column={1}>
 							<Descriptions.Items
 								label={lan == "en" ? "Device Name" : "设备名"}
 							>
-							<Select defaultValue={'--'} size = {'small'} onChange={this.props.handleDeviceChange} loading={!connection}>
+							<Select defaultValue={'------'} size = {'small'} onChange={this.props.handleDeviceChange} loading={!connection}>
 							  {options}
 							</Select>
 							</Descriptions.Items>

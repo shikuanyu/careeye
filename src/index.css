@@ -30,3 +30,13 @@ img {
   padding-top:1vh;
   padding-bottom:1vh;
 }
+.text-right{
+  text-align:right;
+}
+.text-center{
+  text-align:center;
+}
+.tip{
+  color:rgb(98, 98, 98);
+  font-size:13px;
+}

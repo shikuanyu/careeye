@@ -10,6 +10,7 @@ module.exports = override(
     javascriptEnabled:true,
     modifyVars:{
       '@layout-header-background': '#042c52',
+      '@font-size-base':14,
     },
   }),
 );

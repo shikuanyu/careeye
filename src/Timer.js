@@ -60,12 +60,12 @@ class Timer extends Component {
 			</div>
 			:
 			<Row type='flex' align='middle'>
-			  <Col span={8}>
+			  <Col span={2}>
 				<Badge
 				count={'!'}
 				/>
 				</Col>
-				<Col span={16}>
+				<Col span={22}>
 				  {`${minutes}:${minutes}:${seconds}`}
 				</Col>
 			</Row>

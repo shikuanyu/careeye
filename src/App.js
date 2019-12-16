@@ -25,7 +25,7 @@ class App extends Component {
 						heartWarningLevel: "GREEN"
 					}
 				],
-				deviceId: "--",
+				deviceId: "-      ",
 				goneWarningLevel: 0,
 				deviceLocalIp: "192.168.7.16",
 				totalPeopleNumber: 0,
@@ -204,7 +204,7 @@ class App extends Component {
 			people_count,
 			connection
 		};
-		if(people_count>0){
+		if(this.state.data.people.length>0){
 			var { pose, heartRate, breathRate } = this.state.data.people[0];
 		}else {
 			var pose = null;
@@ -221,10 +221,11 @@ class App extends Component {
 				<Layout>
 					<Header className="spaceDown">
 						<Row type="flex" align="middle">
-							<Col span={1} offset={1}>
+							<Col xs={4} sm={2} md={2} lg={1} xl={1} offset={1}>
 								<img src={mock.logoURL} alt="logo" />
 							</Col>
-							<Col span={2} offset={20}>
+							<Col xs={15} sm={18} lg={20}/>
+							<Col span={2}>
 							<Button type="primary" onClick={this.changeLanguage}>
 								{this.state.lan == "en" ? "中文" : "English"}
 							</Button>
@@ -261,11 +262,11 @@ class App extends Component {
 					<Footer>
 						<Row type="flex" justify="center" style={{ marginTop: "-2vh" }}>
 							<Col style={{ textAlign: "center" }} span={22}>
-								<h3>
+								<p className='tip'>
 									{this.state.lan == "en"
 										? "United Dimensions Technologies Co., Ltd."
 										: "联合维度（广州）科技有限公司"}
-								</h3>
+								</p>
 							</Col>
 						</Row>
 					</Footer>
