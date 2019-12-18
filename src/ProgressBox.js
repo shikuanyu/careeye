@@ -14,7 +14,7 @@ class ProgressBox extends Component {
 							<h2>{lan == "en" ? "No available subject" : "未发现采集对象"}</h2>
 						) : (
 							<h2>
-								{lan == "en" ? "Detecting health indexes..." : "采集信号中..."}
+								{lan == "en" ? "Detecting rates" : "采集信号中"}
 							</h2>
 						)}
 					</Col>
