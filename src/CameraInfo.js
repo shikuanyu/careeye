@@ -71,7 +71,7 @@ class CameraInfo extends Component {
 							<Descriptions.Items
 								label={lan == "en" ? "Device Name" : "设备名"}
 							>
-							<Select defaultValue={'------'} size = {'small'} onChange={this.props.handleDeviceChange} loading={!connection}>
+							<Select dropdownMatchSelectWidth={false} defaultValue={'--'} size = {'small'} onChange={this.props.handleDeviceChange} loading={!connection}>
 							  {options}
 							</Select>
 							</Descriptions.Items>
