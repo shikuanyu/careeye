@@ -14,27 +14,13 @@ class App extends Component {
 		this.state = {
 			data: {
 				people: [
-					{
-						breathWarningLevel: "GREEN",
-						pose: null,
-						poseWarningLevel: "GREEN",
-						ROI: "default0",
-						heartRate: -1,
-						breathRate: -1,
-						info: "",
-						heartWarningLevel: "GREEN"
-					}
 				],
-				deviceId: "-      ",
+				deviceId: "--",
 				goneWarningLevel: 0,
 				deviceLocalIp: "192.168.7.16",
 				totalPeopleNumber: 0,
 				isGettingSignal: 0,
 				peopleGone: [
-					{
-						ROI2_ID: "blindSpot0",
-						goneTime: 1204.707
-					}
 				],
 				_t: 1575260796.561986,
 				rotateAngle: 0,
