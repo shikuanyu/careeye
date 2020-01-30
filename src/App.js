@@ -148,7 +148,7 @@ class App extends Component {
 					let index = 0;
 					let connection =false;
 					for(let i=0;i<data.length;i++){
-						let deviceName=data[i].deviceId;
+						let deviceName=data[i]._name;
 						deviceNames.push(deviceName);
 						if(deviceName==activeDevice){
 							index=i;
