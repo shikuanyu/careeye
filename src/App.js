@@ -129,7 +129,8 @@ class App extends Component {
                 headers: initHeaders,
                 // cache:'default',
             };
-            fetch('http://www.utdimensions.com:5005/check_newest_jsonstr?deviceId=all', init)
+	    //'http://www.utdimensions.com:5005/check_newest_jsonstr?deviceId=all'
+            fetch('http://localhost:5005/check_newest_jsonstr?TEST', init)
                 .then((res) => {
                     return res.json();
                 })
@@ -142,6 +143,10 @@ class App extends Component {
                     let connection = false;
                     for (let i = 0; i < data.length; i++) {
                         let deviceName = data[i]._name;
+
+			if(deviceName === "") {
+			    deviceName = "Local";
+			}
                         deviceNames.push(deviceName);
                         if (deviceName === activeDevice) {
                             index = i;

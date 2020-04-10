@@ -17,9 +17,9 @@
     "react-scripts": "3.2.0"
   },
   "scripts": {
-    "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
-    "test": "react-app-rewired test",
+    "start": "PORT=5001 react-app-rewired start",
+    "build": "PORT=5001 react-app-rewired build",
+    "test": "PORT=5001 react-app-rewired test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
