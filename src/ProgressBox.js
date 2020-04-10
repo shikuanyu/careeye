@@ -8,13 +8,13 @@ class ProgressBox extends Component {
 			<div>
 				<Row type="flex" justify="center">
 					<Col className='text-center'>
-						{progress == 100 ? (
-							<h2>{lan == "en" ? "Detection complete!" : "采集完成！"}</h2>
-						) : progress == 0 ? (
-							<h2>{lan == "en" ? "No available subject" : "未发现采集对象"}</h2>
+						{progress === 100 ? (
+							<h2>{lan === "en" ? "Detection complete!" : "采集完成！"}</h2>
+						) : progress === 0 ? (
+							<h2>{lan === "en" ? "No available subject" : "未发现采集对象"}</h2>
 						) : (
 							<h2>
-								{lan == "en" ? "Detecting rates" : "采集信号中"}
+								{lan === "en" ? "Detecting rates" : "采集信号中"}
 							</h2>
 						)}
 					</Col>
@@ -22,28 +22,28 @@ class ProgressBox extends Component {
 				<Row type="flex" justify="center">
 					<Col span={20}>
 						<Progress
-							percent={progress == 0 ? 100 : progress}
+							percent={progress === 0 ? 100 : progress}
 							status={
-								progress == 0
+								progress === 0
 									? "normal"
-									: progress == 100
+									: progress === 100
 									? "success"
 									: "active"
 							}
-							strokeColor={progress == 0 ? "#dbd9d9" : ""}
-							showInfo={progress == 0 ? false : true}
+							strokeColor={progress === 0 ? "#dbd9d9" : ""}
+							showInfo={progress === 0 ? false : true}
 							strokeWidth={20}
 						/>
 					</Col>
 				</Row>
 				<Row type="flex" justify="center">
 					<Col className='text-center'>
-						{progress == 100 ? (
-							<h3>{lan == "en" ? "See result below" : "以下为检测结果"}</h3>
-						) : progress == 0 ? (
+						{progress === 100 ? (
+							<h3>{lan === "en" ? "See result below" : "以下为检测结果"}</h3>
+						) : progress === 0 ? (
 							<h3>{""}</h3>
 						) : (
-							<h3>{lan == "en" ? "Please stay still" : "请保持不动"}</h3>
+							<h3>{lan === "en" ? "Please stay still" : "请保持不动"}</h3>
 						)}
 					</Col>
 				</Row>

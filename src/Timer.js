@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Row,Col,Button, Badge } from "antd";
+import { Row,Col, Badge } from "antd";
 
 class Timer extends Component {
 	constructor(props) {
@@ -13,12 +13,12 @@ class Timer extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		let { opt, threshold } = nextProps;
-		if (opt == "start") {
+		let { opt } = nextProps;
+		if (opt === "start") {
 			this.startTimer();
-		} else if (opt == "reset") {
+		} else if (opt === "reset") {
 			this.resetTimer();
-		} else if (opt == "stop") {
+		} else if (opt === "stop") {
 			this.stopTimer();
 			this.resetTimer();
 		}
@@ -48,7 +48,6 @@ class Timer extends Component {
 	};
 	render() {
 		const { timerTime } = this.state;
-		let centiseconds = ("0" + (Math.floor(timerTime / 10) % 100)).slice(-2);
 		let seconds = ("0" + (Math.floor(timerTime / 1000) % 60)).slice(-2);
 		let minutes = ("0" + (Math.floor(timerTime / 60000) % 60)).slice(-2);
 		let hours = ("0" + Math.floor(timerTime / 3600000)).slice(-2);

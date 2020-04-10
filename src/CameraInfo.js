@@ -26,7 +26,7 @@ class CameraInfo extends Component {
     }
 
     render() {
-        const { movement, people_count, activeDevice, deviceNames, connection } = this.props.info;
+        const { movement, people_count, deviceNames, connection } = this.props.info;
         const lan = this.props.lan;
         const options = [];
         if (Array.isArray(deviceNames)) {
@@ -45,23 +45,23 @@ class CameraInfo extends Component {
                     <Col xs={24} sm={10} md={10} lg={8} xl={7}>
                         <Descriptions size={'small'} column={1}>
                             <Descriptions.Item
-                                label={lan == 'en' ? 'Movement Detection' : '运动检测'}
+                                label={lan === 'en' ? 'Movement Detection' : '运动检测'}
                             >
-                                {movement == 'static'
-                                    ? lan == 'en'
+                                {movement === 'static'
+                                    ? lan === 'en'
                                         ? 'static'
                                         : '静止'
-                                    : movement == 'fretting'
-                                    ? lan == 'en'
+                                    : movement === 'fretting'
+                                    ? lan === 'en'
                                         ? 'fretting'
                                         : '微动'
-                                    : movement == 'moving'
-                                    ? lan == 'en'
+                                    : movement === 'moving'
+                                    ? lan === 'en'
                                         ? 'moving'
                                         : '移动'
                                     : '--'}
                             </Descriptions.Item>
-                            <Descriptions.Item label={lan == 'en' ? 'Number of People' : '人数'}>
+                            <Descriptions.Item label={lan === 'en' ? 'Number of People' : '人数'}>
                                 {people_count}
                             </Descriptions.Item>
                         </Descriptions>
@@ -69,7 +69,7 @@ class CameraInfo extends Component {
                     <Col md={4} lg={10} xl={12} />
                     <Col xs={24} sm={12} md={10} lg={6} xl={5}>
                         <Descriptions size={'small'} column={1}>
-                            <Descriptions.Item label={lan == 'en' ? 'Device Name' : '设备名'}>
+                            <Descriptions.Item label={lan === 'en' ? 'Device Name' : '设备名'}>
                                 <Select
                                     dropdownMatchSelectWidth={false}
                                     defaultValue={'--'}
@@ -80,8 +80,8 @@ class CameraInfo extends Component {
                                     {options}
                                 </Select>
                             </Descriptions.Item>
-                            <Descriptions.Item label={lan == 'en' ? 'Time' : '时间'}>
-                                {this.state.time.toLocaleString(lan == 'en' ? 'en-US' : 'zh-CN')}
+                            <Descriptions.Item label={lan === 'en' ? 'Time' : '时间'}>
+                                {this.state.time.toLocaleString(lan === 'en' ? 'en-US' : 'zh-CN')}
                             </Descriptions.Item>
                         </Descriptions>
                     </Col>

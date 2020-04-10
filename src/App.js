@@ -33,7 +33,7 @@ class App extends Component {
     }
 
     changeLanguage() {
-        if (this.state.lan == 'en') {
+        if (this.state.lan === 'en') {
             this.setState({ lan: 'zh' });
         } else {
             this.setState({ lan: 'en' });
@@ -110,7 +110,7 @@ class App extends Component {
     }
 
     checkDataValidity = (data) => {
-        if (data.length == 0) {
+        if (data.length === 0) {
             return false;
         } else return true;
     };
@@ -143,7 +143,7 @@ class App extends Component {
                     for (let i = 0; i < data.length; i++) {
                         let deviceName = data[i]._name;
                         deviceNames.push(deviceName);
-                        if (deviceName == activeDevice) {
+                        if (deviceName === activeDevice) {
                             index = i;
                             connection = true;
                         }
@@ -161,10 +161,8 @@ class App extends Component {
     };
 
     render() {
-        const tsIcon =
-            'https://images.unsplash.com/photo-1436473849883-bb3464c23e93?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80';
         const mock = {
-            logoURL: 'http://utdimensions.com/LOGO256-1.d88fd1a0.png',
+            logoURL: '/resources/ud-logo.png',
         };
         let movement =
             this.state.data.movementLevel == null
@@ -183,17 +181,13 @@ class App extends Component {
             deviceNames,
             people_count,
             connection,
-        };
+		};
+		let pose = null, heartRate = -1, breathRate = -1;
         if (people_count > 0) {
-            var { pose, heartRate, breathRate } = this.state.data.people[0];
-        } else {
-            var pose = null;
-            var heartRate = -1;
-            var breathRate = -1;
-        }
+         	({ pose, heartRate, breathRate } = this.state.data.people[0]);
+        } 
 		progress = heartRate !== -1 ? 0 : breathRate !== -1 ? 0 : progress;
 
-        let lan = this.state.lan;
         return (
             <div>
                 <Layout>
@@ -205,7 +199,7 @@ class App extends Component {
                             <Col xs={15} sm={18} lg={20} />
                             <Col span={2}>
                                 <Button type="primary" onClick={this.changeLanguage}>
-                                    {this.state.lan == 'en' ? '中文' : 'English'}
+                                    {this.state.lan === 'en' ? '中文' : 'English'}
                                 </Button>
                             </Col>
                         </Row>
@@ -221,7 +215,7 @@ class App extends Component {
                                 <Divider />
                                 <SubjectInfo lan={this.state.lan} pose={pose} progress={progress} />
                                 <Divider>
-                                    {this.state.lan == 'en' ? 'Real Time Monitoring' : '实时监测'}
+                                    {this.state.lan === 'en' ? 'Real Time Monitoring' : '实时监测'}
                                 </Divider>
                                 <Row>
                                     <Col span={22}>
@@ -240,7 +234,7 @@ class App extends Component {
                         <Row type="flex" justify="center" style={{ marginTop: '-2vh' }}>
                             <Col style={{ textAlign: 'center' }} span={22}>
                                 <p className="tip">
-                                    {this.state.lan == 'en'
+                                    {this.state.lan === 'en'
                                         ? 'United Dimensions Technologies Co., Ltd.'
                                         : '联合维度（广州）科技有限公司'}
                                 </p>
