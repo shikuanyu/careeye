@@ -80,16 +80,16 @@ class SubjectInfo extends Component {
 							column={1}
 							size="small"
 						>
-							<Descriptions.Items label={lan == "en" ? "Posture" : "动作"}>
+							<Descriptions.Item label={lan == "en" ? "Posture" : "动作"}>
 								{pose==null?'--':(lan=='en'?pose:
 								(
 									pose=='stand'?'站':
 									pose=='sit'?'坐或蹲':'坐地上或躺'
 								))}
-							</Descriptions.Items>
-							<Descriptions.Items label={lan == "en" ? "Duration" : "时长"}>
+							</Descriptions.Item>
+							<Descriptions.Item label={lan == "en" ? "Duration" : "时长"}>
 								<Timer opt={this.state.timerOpt} threshold={this.state.threshold} />
-							</Descriptions.Items>
+							</Descriptions.Item>
 						</Descriptions>
 						<Row>
 						  <Col xs={15} sm={10} md={22} lg={20} xl={18}>
