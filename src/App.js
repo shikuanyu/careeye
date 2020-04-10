@@ -129,7 +129,6 @@ class App extends Component {
                 headers: initHeaders,
                 // cache:'default',
             };
-            console.log('start fetching');
             fetch('http://www.utdimensions.com:5005/check_newest_jsonstr?deviceId=all', init)
                 .then((res) => {
                     return res.json();
@@ -158,7 +157,7 @@ class App extends Component {
                     }
                 })
                 .catch((e) => console.log(e));
-        }, 3000);
+        }, 1000);
     };
 
     render() {
@@ -175,7 +174,7 @@ class App extends Component {
                 : this.state.data.movementLevel < 5
                 ? 'fretting'
                 : 'moving';
-        let progress = this.state.data.isGettingSignal / 4;
+		let progress = this.state.data.isGettingSignal / 4;
         let people_count = this.state.data.people.length;
         let { activeDevice, deviceNames, connection } = this.state;
         let cameraInfo = {
@@ -192,7 +191,8 @@ class App extends Component {
             var heartRate = -1;
             var breathRate = -1;
         }
-        progress = heartRate != -1 ? 100 : breathRate != -1 ? 100 : progress;
+		progress = heartRate !== -1 ? 0 : breathRate !== -1 ? 0 : progress;
+
         let lan = this.state.lan;
         return (
             <div>
